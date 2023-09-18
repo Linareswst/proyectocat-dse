@@ -3,3 +3,4 @@
 <h2>Collaborators</h2>
 
 <p align="left">- Oscar Alejandro Linares López</p>
+<p align= "left"> - Katherine Gissel Guzmán Barrientos</p>
