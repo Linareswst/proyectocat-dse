@@ -9,4 +9,3 @@
 <p align= "left"> - Néstor Javier Artiga Larín</p>
 
 
-<p align= "left"> - texto de prueba </p>
