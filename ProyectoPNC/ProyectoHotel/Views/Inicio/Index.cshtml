@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+</div>
+<!-- Content Row -->
+<div class="row">
+
+    <!-- Pending Requests Card Example -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"></script>
+        <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+        <style>
+            /* Agrega estilos personalizados si es necesario */
+        </style>
+    </head>
+    <body>
+
+        <div class="col-xl-12 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2 animate__animated animate__fadeInUp">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1" id="animated-text">
+                                <h3 class="h3 mb-0 text-gray-800">Sistema PNC</h3>
+                            </div>
+
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-info fa-2x text-info animate__animated animate__rubberBand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                // Aplica la animación a las letras del título
+                $("#animated-text h3").lettering();
+                anime.timeline({ loop: false })
+                    .add({
+                        targets: '#animated-text .char',
+                        opacity: [0, 1],
+                        easing: "easeInOutQuad",
+                        duration: 1500,
+                        delay: function (el, i) {
+                            return 50 * i;
+                        }
+                    });
+            });
+        </script>
+
+    </body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <style>
+        /* Agrega estilos personalizados si es necesario */
+    </style>
+</head>
+<body>
+
+    <div class="col-xl-12 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2 animate__animated animate__fadeInUp">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-body mb-1" id="animated-names">
+                            <h3 class="h3 mb-0 text-gray-800"> - Daniel Alejandro Molina Menjivar MM191627 </h3>
+                            <h3 class="h3 mb-0 text-gray-800">- Rodrigo Fernando Valle Díaz VD191672s</h3>
+                            <h3 class="h3 mb-0 text-gray-800"> - Oscar Alejandro Linares López LL191567</h3>
+                            <h3 class="h3 mb-0 text-gray-800"> - Nestor Javier Artiga Larin AL150682</h3>
+                            <h3 class="h3 mb-0 text-gray-800"> - Katherine Gissel Guzmán Barrientos GB161626</h3>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-info fa-2x text-info animate__animated animate__rubberBand"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Aplica la animación a los nombres
+            $("#animated-names h3").each(function (index) {
+                $(this).css("opacity", "0");
+                anime.timeline({ loop: false })
+                    .add({
+                        targets: this,
+                        opacity: [0, 1],
+                        easing: "easeInOutQuad",
+                        duration: 1000,
+                        delay: 100 * index
+                    });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+</div>
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                url: '@Url.Action("ListarHabitacion", "Gestion")' + '?idpiso=0',
+                type: "GET",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $("#totalhabitaciones").text(data.data.length)
+                        $("#habitacionesdisponibles").text(data.data.filter(h => h.oEstadoHabitacion.IdEstadoHabitacion == 1).length)
+                        $("#habitacionesocupadas").text(data.data.filter(h => h.oEstadoHabitacion.IdEstadoHabitacion == 2).length)
+                        $("#habitacioneslimpieza").text(data.data.filter(h => h.oEstadoHabitacion.IdEstadoHabitacion == 3).length)
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+
+        })
+
+
+    </script>
+}
